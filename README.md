@@ -9,6 +9,8 @@ Fine-tuning Large Language Model menggunakan **PEFT (Parameter-Efficient Fine-Tu
 | **Model Dasar** | `unsloth/llama-3-8b-bnb-4bit` |
 | **Teknik** | QLoRA dengan kuantisasi 4-bit |
 | **Hardware** | Google Colab T4 GPU (16GB VRAM) |
+| **Python** | 3.12.12 |
+| **pip** | 24.1.2 |
 | **Dataset** | 50 pasang Q&A instruksi |
 | **Framework** | Unsloth + TRL + PEFT |
 
