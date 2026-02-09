@@ -21,8 +21,7 @@ Project/
 ├── data/
 │   ├── raw/permenkes-no-10-tahun-2024.pdf   # PDF sumber
 │   └── dataset.jsonl                         # Dataset pelatihan
-├── outputs/
-│   └── lora_adapter/                         # Adapter LoRA terlatih
+├── outputs/                                  # Adapter LoRA terlatih setelah training
 ├── notebook.ipynb                            # Notebook pipeline lengkap
 ├── requirements.txt                          # Dependensi
 └── README.md
@@ -96,6 +95,16 @@ Project/
 | ROUGE-1 (Unigram) | 0.2402 |
 | ROUGE-2 (Bigram) | 0.1421 |
 | ROUGE-L (LCS) | 0.2009 |
+
+## 📚 Perbandingan Sebelum vs Sesudah Fine-Tuning
+
+| Fitur | Model Dasar (Llama-3-8B) | Model Fine-Tuned (Ours) |
+| :--- | :--- | :--- |
+| **Pengetahuan** | Pengetahuan Umum (Tidak tahu Permenkes No. 10/2024) | Pengetahuan Spesifik (Paham Pasal 1-11) |
+| **Gaya Output** | Verbose, Bahasa Inggris/Indonesia campur | Terstruktur, mengutip Pasal spesifik |
+| **Halusinasi** | Tinggi (Mengarang pasal yang tidak ada) | Rendah (Grounding ke dokumen latih) |
+
+> **Catatan:** Kode inferensi sebelum fine-tuning tidak disertakan karena model dasar tidak memiliki pengetahuan tentang regulasi spesifik tahun 2024 ini.
 
 ## 📝 Format Dataset
 
