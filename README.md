@@ -9,46 +9,43 @@ Fine-tuning a Large Language Model using **PEFT (Parameter-Efficient Fine-Tuning
 | **Base Model** | `unsloth/llama-3-8b-bnb-4bit` |
 | **Technique** | QLoRA with 4-bit quantization |
 | **Target Hardware** | Google Colab T4 GPU (16GB VRAM) |
-| **Dataset** | 10+ instruction-tuning examples |
+| **Dataset** | 58 instruction-tuning examples |
+| **Framework** | Unsloth + TRL + PEFT |
 
 ## 📁 Project Structure
 
 ```
 Project/
-├── data/raw/permenkes-no-10-tahun-2024.pdf   # Source PDF
-├── outputs/                                    # Trained LoRA adapters
-├── notebook.ipynb                              # Complete pipeline notebook
-├── dataset.jsonl                               # Generated training data
-├── requirements.txt                            # Dependencies
+├── data/
+│   ├── raw/permenkes-no-10-tahun-2024.pdf   # Source PDF
+│   └── dataset.jsonl                         # Generated training data
+├── outputs/
+│   └── lora_adapter/                         # Trained LoRA adapters
+├── notebook.ipynb                            # Complete pipeline notebook
+├── requirements.txt                          # Dependencies
 └── README.md
 ```
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
-```bash
-pip install -r requirements.txt
-```
+### 1. Run on Google Colab (Recommended)
+1. Open `notebook.ipynb` in Google Colab
+2. Select **T4 GPU** runtime: `Runtime → Change runtime type → T4 GPU`
+3. Run all cells sequentially
 
-### 2. Run on Google Colab
-1. Upload `notebook.ipynb` to Google Colab
-2. Upload `data/raw/permenkes-no-10-tahun-2024.pdf`
-3. Select **T4 GPU** runtime: `Runtime → Change runtime type → T4 GPU`
-4. Run all cells
-
-### 3. Local Development
+### 2. Install Dependencies (Local)
 ```bash
-jupyter notebook notebook.ipynb
+pip install unsloth rouge_score pdfplumber
 ```
 
 ## 📓 Notebook Structure
 
 | Phase | Description |
 |-------|-------------|
-| **Setup** | Install dependencies, import libraries |
+| **Setup** | Install unsloth, import libraries |
 | **Phase 1** | Data Preprocessing (PDF → JSONL) |
 | **Phase 2** | Model Training (QLoRA fine-tuning) |
-| **Phase 3** | Inference Demo (Q&A with citations) |
+| **Phase 3** | Inference Demo & ROUGE Evaluation |
 
 ## ⚙️ Training Configuration
 
@@ -56,27 +53,44 @@ jupyter notebook notebook.ipynb
 |-----------|-------|
 | LoRA Rank (r) | 16 |
 | LoRA Alpha | 32 |
+| LoRA Dropout | 0 |
 | Batch Size | 2 |
 | Gradient Accumulation | 4 |
 | Learning Rate | 2e-4 |
-| Max Steps | 60 |
+| Max Steps | 200 |
+| Max Seq Length | 512 |
 | Quantization | 4-bit (BitsAndBytes) |
+| Optimizer | paged_adamw_8bit |
 
 ## 📊 Dataset Format
 
 ```json
 {
-  "instruction": "Jelaskan isi dari Pasal 1 dalam Permenkes No. 10 Tahun 2024.",
-  "input": "Konteks: Pasal 1",
-  "output": "Berdasarkan Pasal 1: ..."
+  "instruction": "Jelaskan isi Pasal 1 dalam Permenkes No 10 Tahun 2024.",
+  "input": "Konteks: Permenkes No. 10 Tahun 2024, Pasal 1",
+  "output": "Isi Pasal 1 ..."
 }
 ```
+
+## 📈 Evaluation Metrics
+
+Model performance evaluated using ROUGE scores:
+- **ROUGE-1** (Unigram overlap)
+- **ROUGE-2** (Bigram overlap)
+- **ROUGE-L** (Longest Common Subsequence)
 
 ## ✅ Requirements Met
 
 - [x] PDF text extraction and cleaning
-- [x] JSONL dataset generation (10+ examples)
+- [x] JSONL dataset generation (58 examples)
 - [x] T4 GPU memory optimization (4-bit quantization)
-- [x] QLoRA fine-tuning with PEFT
+- [x] QLoRA fine-tuning with PEFT + Unsloth
 - [x] Article citation in model outputs
+- [x] ROUGE score evaluation
 - [x] Comprehensive documentation
+
+## 🔗 References
+
+- [Unsloth](https://github.com/unslothai/unsloth) - 2x faster LLM fine-tuning
+- [TRL](https://github.com/huggingface/trl) - Transformer Reinforcement Learning
+- [PEFT](https://github.com/huggingface/peft) - Parameter-Efficient Fine-Tuning
