@@ -33,12 +33,28 @@ Project/
 ### Jalankan di Google Colab (Disarankan)
 1. Buka `notebook.ipynb` di Google Colab
 2. Pilih runtime **T4 GPU**: `Runtime → Change runtime type → T4 GPU`
-3. Jalankan semua cell secara berurutan
+3. Install dependensi dengan menjalankan cell pertama:
+   ```python
+   !pip install -r requirements.txt
+   ```
+4. Jalankan semua cell secara berurutan
 
-### Install Dependensi (Lokal)
-```bash
-pip install unsloth rouge_score pdfplumber
-```
+### Jalankan di Lokal
+1. Clone repository:
+   ```bash
+   git clone https://github.com/mpfordreamer/paperlesshospital-test.git
+   cd paperlesshospital-test
+   ```
+2. Install dependensi dari `requirements.txt`:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Jalankan notebook:
+   ```bash
+   jupyter notebook notebook.ipynb
+   ```
+
+> **Catatan:** Diperlukan GPU NVIDIA dengan CUDA untuk training lokal.
 
 ## 📓 Struktur Notebook
 
