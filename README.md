@@ -100,11 +100,11 @@ Project/
 
 | Fitur | Model Dasar (Llama-3-8B) | Model Fine-Tuned |
 | :--- | :--- | :--- |
-| **Pengetahuan** | Pengetahuan Umum (Tidak tahu Permenkes No. 10/2024) | Pengetahuan Spesifik (Paham Pasal 1-11) |
+| **Pengetahuan** | Pengetahuan Umum yang tidak tahu spesifik mengenai Permenkes No. 10/2024 | Pengetahuan Spesifik (Paham Pasal 1-11) |
 | **Gaya Output** | Verbose, Bahasa Inggris/Indonesia campur | Terstruktur, mengutip Pasal spesifik |
 | **Halusinasi** | Tinggi (Mengarang pasal yang tidak ada) | Rendah (Grounding ke dokumen latih) |
 
-> **Catatan:** Kode inferensi sebelum fine-tuning tidak disertakan karena model dasar tidak memiliki pengetahuan tentang regulasi spesifik tahun 2024 ini.
+> **Catatan:** Kode inferensi sebelum fine-tuning tersedia di notebook untuk menunjukkan perbandingan performa model.
 
 ## 📝 Format Dataset
 
