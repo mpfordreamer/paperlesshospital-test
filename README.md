@@ -1,55 +1,55 @@
-# 🏥 LLM Fine-Tuning for Indonesian Health Regulations
+# 🏥 Fine-Tuning LLM untuk Regulasi Kesehatan Indonesia
 
-Fine-tuning a Large Language Model using **PEFT (Parameter-Efficient Fine-Tuning)** and **QLoRA** on Permenkes No. 10 Tahun 2024 (Indonesian Health Regulation).
+Fine-tuning Large Language Model menggunakan **PEFT (Parameter-Efficient Fine-Tuning)** dan **QLoRA** pada Permenkes No. 10 Tahun 2024.
 
-## 📋 Overview
+## 📋 Ringkasan
 
-| Specification | Value |
-|---------------|-------|
-| **Base Model** | `unsloth/llama-3-8b-bnb-4bit` |
-| **Technique** | QLoRA with 4-bit quantization |
-| **Target Hardware** | Google Colab T4 GPU (16GB VRAM) |
-| **Dataset** | 58 instruction-tuning examples |
+| Spesifikasi | Nilai |
+|-------------|-------|
+| **Model Dasar** | `unsloth/llama-3-8b-bnb-4bit` |
+| **Teknik** | QLoRA dengan kuantisasi 4-bit |
+| **Hardware** | Google Colab T4 GPU (16GB VRAM) |
+| **Dataset** | 50 pasang Q&A instruksi |
 | **Framework** | Unsloth + TRL + PEFT |
 
-## 📁 Project Structure
+## 📁 Struktur Proyek
 
 ```
 Project/
 ├── data/
-│   ├── raw/permenkes-no-10-tahun-2024.pdf   # Source PDF
-│   └── dataset.jsonl                         # Generated training data
+│   ├── raw/permenkes-no-10-tahun-2024.pdf   # PDF sumber
+│   └── dataset.jsonl                         # Dataset pelatihan
 ├── outputs/
-│   └── lora_adapter/                         # Trained LoRA adapters
-├── notebook.ipynb                            # Complete pipeline notebook
-├── requirements.txt                          # Dependencies
+│   └── lora_adapter/                         # Adapter LoRA terlatih
+├── notebook.ipynb                            # Notebook pipeline lengkap
+├── requirements.txt                          # Dependensi
 └── README.md
 ```
 
-## 🚀 Quick Start
+## 🚀 Cara Penggunaan
 
-### 1. Run on Google Colab (Recommended)
-1. Open `notebook.ipynb` in Google Colab
-2. Select **T4 GPU** runtime: `Runtime → Change runtime type → T4 GPU`
-3. Run all cells sequentially
+### Jalankan di Google Colab (Disarankan)
+1. Buka `notebook.ipynb` di Google Colab
+2. Pilih runtime **T4 GPU**: `Runtime → Change runtime type → T4 GPU`
+3. Jalankan semua cell secara berurutan
 
-### 2. Install Dependencies (Local)
+### Install Dependensi (Lokal)
 ```bash
 pip install unsloth rouge_score pdfplumber
 ```
 
-## 📓 Notebook Structure
+## 📓 Struktur Notebook
 
-| Phase | Description |
-|-------|-------------|
-| **Setup** | Install unsloth, import libraries |
-| **Phase 1** | Data Preprocessing (PDF → JSONL) |
-| **Phase 2** | Model Training (QLoRA fine-tuning) |
-| **Phase 3** | Inference Demo & ROUGE Evaluation |
+| Fase | Deskripsi |
+|------|-----------|
+| **Setup** | Install unsloth, import library |
+| **Fase 1** | Preprocessing Data (PDF → JSONL) |
+| **Fase 2** | Training Model (QLoRA fine-tuning) |
+| **Fase 3** | Demo Inferensi & Evaluasi ROUGE |
 
-## ⚙️ Training Configuration
+## ⚙️ Konfigurasi Training
 
-| Parameter | Value |
+| Parameter | Nilai |
 |-----------|-------|
 | LoRA Rank (r) | 16 |
 | LoRA Alpha | 32 |
@@ -57,40 +57,60 @@ pip install unsloth rouge_score pdfplumber
 | Batch Size | 2 |
 | Gradient Accumulation | 4 |
 | Learning Rate | 2e-4 |
-| Max Steps | 200 |
+| Max Steps | 100 |
 | Max Seq Length | 512 |
-| Quantization | 4-bit (BitsAndBytes) |
+| Kuantisasi | 4-bit (BitsAndBytes) |
 | Optimizer | paged_adamw_8bit |
 
-## 📊 Dataset Format
+## 📊 Hasil Training
+
+| Metrik | Nilai |
+|--------|-------|
+| Training Steps | 100 |
+| Waktu Training | ~13 menit |
+| Final Loss | 0.0144 |
+| Epochs | ~14 |
+
+## 📈 Skor Evaluasi (ROUGE)
+
+| Metrik | Skor |
+|--------|------|
+| ROUGE-1 (Unigram) | 0.2402 |
+| ROUGE-2 (Bigram) | 0.1421 |
+| ROUGE-L (LCS) | 0.2009 |
+
+## 📝 Format Dataset
 
 ```json
 {
   "instruction": "Jelaskan isi Pasal 1 dalam Permenkes No 10 Tahun 2024.",
   "input": "Konteks: Permenkes No. 10 Tahun 2024, Pasal 1",
-  "output": "Isi Pasal 1 ..."
+  "output": "Jawaban: Berdasarkan regulasi, Pasal 1 mengatur..."
 }
 ```
 
-## 📈 Evaluation Metrics
+## ✅ Persyaratan Terpenuhi
 
-Model performance evaluated using ROUGE scores:
-- **ROUGE-1** (Unigram overlap)
-- **ROUGE-2** (Bigram overlap)
-- **ROUGE-L** (Longest Common Subsequence)
+- [x] Ekstraksi teks PDF dan pembersihan
+- [x] Generasi dataset JSONL (50 contoh)
+- [x] Optimasi memori T4 GPU (kuantisasi 4-bit)
+- [x] Fine-tuning QLoRA dengan PEFT + Unsloth
+- [x] Sitasi Pasal dalam output model
+- [x] Evaluasi skor ROUGE
+- [x] Dokumentasi lengkap
 
-## ✅ Requirements Met
-
-- [x] PDF text extraction and cleaning
-- [x] JSONL dataset generation (58 examples)
-- [x] T4 GPU memory optimization (4-bit quantization)
-- [x] QLoRA fine-tuning with PEFT + Unsloth
-- [x] Article citation in model outputs
-- [x] ROUGE score evaluation
-- [x] Comprehensive documentation
-
-## 🔗 References
+## 🔗 Referensi
 
 - [Unsloth](https://github.com/unslothai/unsloth) - 2x faster LLM fine-tuning
 - [TRL](https://github.com/huggingface/trl) - Transformer Reinforcement Learning
 - [PEFT](https://github.com/huggingface/peft) - Parameter-Efficient Fine-Tuning
+
+---
+
+<p align="center">
+  Made with ❤️ by <strong>Dewa Mahesta</strong>
+</p>
+
+<p align="center">
+  © 2026. All rights reserved.
+</p>
