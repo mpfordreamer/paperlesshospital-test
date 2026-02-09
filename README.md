@@ -98,7 +98,7 @@ Project/
 
 ## 📚 Perbandingan Sebelum vs Sesudah Fine-Tuning
 
-| Fitur | Model Dasar (Llama-3-8B) | Model Fine-Tuned (Ours) |
+| Fitur | Model Dasar (Llama-3-8B) | Model Fine-Tuned |
 | :--- | :--- | :--- |
 | **Pengetahuan** | Pengetahuan Umum (Tidak tahu Permenkes No. 10/2024) | Pengetahuan Spesifik (Paham Pasal 1-11) |
 | **Gaya Output** | Verbose, Bahasa Inggris/Indonesia campur | Terstruktur, mengutip Pasal spesifik |
